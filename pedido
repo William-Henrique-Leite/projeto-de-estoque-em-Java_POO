@@ -1,0 +1,39 @@
+package projetodia30;
+
+import java.util.ArrayList;
+
+public class Pedido {
+
+	private int numeroPedido;
+	private ArrayList<Produto> produtos;
+	private double valorTotal;
+	
+	public Pedido(int numeroPedido) {
+		this.numeroPedido = numeroPedido;
+		this.produtos = new ArrayList<>();
+		this.valorTotal = 0.0;
+	}
+	
+    public void adicionarProduto(Produto produto, int quantidade) {
+        produtos.add(produto);
+        valorTotal += produto.getValorProduto() * quantidade;
+    }
+
+    public void removerProduto(Produto produto, int quantidade) {
+        produtos.remove(produto);
+        valorTotal -= produto.getValorProduto() * quantidade;
+    }
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public int getNumeroPedido() {
+        return numeroPedido;
+    }
+
+    public double getvalorTotal() {
+        return valorTotal;
+    }
+	
+}
