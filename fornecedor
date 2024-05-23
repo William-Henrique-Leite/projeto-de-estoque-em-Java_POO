@@ -1,0 +1,41 @@
+package projetodia30;
+
+import java.util.ArrayList;
+
+public class Fornecedor {
+
+	private String nomeFornecedor;
+    private ArrayList<Produto> produtosFornecidos;
+
+    public Fornecedor(String nomeFornecedor) {
+        this.nomeFornecedor = nomeFornecedor;
+        this.produtosFornecidos = new ArrayList<>();
+        produtosFornecidos.add(new Produto("Monitor", 800.00, 10));
+        produtosFornecidos.add(new Produto("Mouse", 50.00, 100));
+        produtosFornecidos.add(new Produto("Teclado", 120.00, 50));
+        produtosFornecidos.add(new Produto("Mouse Pad", 20.00, 150));
+        produtosFornecidos.add(new Produto("Cabo USB", 15.00, 200));
+        produtosFornecidos.add(new Produto("Fone", 70.00, 80));
+        produtosFornecidos.add(new Produto("Carregador", 45.00, 60));
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtosFornecidos.add(produto);
+    }
+
+    public void removerProduto(Produto produto) {
+        produtosFornecidos.remove(produto);
+    }
+
+    public ArrayList<Produto> getProdutosFornecidos() {
+        return produtosFornecidos;
+    }
+
+    public String getnomeFornecedor() {
+        return nomeFornecedor;
+    }
+
+    public void setnomeFornecedor(String nomeFornecedor) {
+        this.nomeFornecedor = nomeFornecedor;
+    }
+}
