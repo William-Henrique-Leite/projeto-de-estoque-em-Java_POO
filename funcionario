@@ -12,13 +12,40 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public void realizarPedido(Pedido pedido, ArrayList<Produto> produtos) {
+    public void realizarPedido(Pedido pedido, ArrayList<Produto> produtos, Estoque estoque) {
+        for (Produto produto : produtos) {
+            boolean encontradoNoEstoque = false;
+            for (Produto estoqueProduto : estoque.getProdutos()) {
+                if (estoqueProduto.getNomeProduto().equals(produto.getNomeProduto())) {
+                    if (estoqueProduto.getQuantidadeProduto() >= produto.getQuantidadeProduto()) {
+                        estoqueProduto.setQuantidadeProduto(estoqueProduto.getQuantidadeProduto() - produto.getQuantidadeProduto());
+                        pedido.adicionarProduto(produto, produto.getQuantidadeProduto());
+                        encontradoNoEstoque = true;
+                        break;
+                    } else {
+                        System.out.println("Quantidade insuficiente no estoque para o produto: " + produto.getNomeProduto());
+                        encontradoNoEstoque = true;
+                        break;
+                    }
+                }
+            }
+            if (!encontradoNoEstoque) {
+                System.out.println("Produto não encontrado no estoque: " + produto.getNomeProduto());
+            }
+        }
     }
 
     public void verificarEstoque(Estoque estoque) {
+        for (Produto produto : estoque.getProdutos()) {
+            System.out.println("Produto: " + produto.getNomeProduto() + ", Quantidade: " + produto.getQuantidadeProduto());
+        }
     }
 
     public void interagirFornecedor(Fornecedor fornecedor) {
+        System.out.println("Produtos fornecidos pelo fornecedor " + fornecedor.getnomeFornecedor() + ":");
+        for (Produto produto : fornecedor.getProdutosFornecidos()) {
+            System.out.println("Produto: " + produto.getNomeProduto() + ", Preço: " + produto.getValorProduto());
+        }
     }
 
     public String getNome() {
