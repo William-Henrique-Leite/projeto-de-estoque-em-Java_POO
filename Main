@@ -1,0 +1,83 @@
+package projetodia30;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner teclado = new Scanner(System.in);
+        Estoque estoque = new Estoque();
+        
+        //inicializando fornecedor e funcionario como exemplo
+        Fornecedor fornecedor = new Fornecedor("Fornecedor1");
+        Funcionario funcionario = new Funcionario("João", "Gerente");
+
+        //tbm inicializa alguns produtos como exemplo
+        estoque.adicionarProduto(new Produto("Monitor", 800.00, 10));
+        estoque.adicionarProduto(new Produto("Mouse", 50.00, 100));
+        estoque.adicionarProduto(new Produto("Teclado", 120.00, 50));
+
+        int opcao;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Verificar Estoque");
+            System.out.println("2. Adicionar Produto ao Estoque");
+            System.out.println("3. Realizar Pedido");
+            System.out.println("4. Interagir com Fornecedor");
+            System.out.println("5. Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (opcao) {
+                case 1:
+                	//so visualiza os produtos do estoque
+                    funcionario.verificarEstoque(estoque);
+                    break;
+                case 2:
+                	// adiciona um produto isolado ao estoque
+                    System.out.print("Nome do produto: ");
+                    String nomeProduto = teclado.nextLine();
+                    System.out.print("Preço do produto: ");
+                    double valorProduto = teclado.nextDouble();
+                    System.out.print("Quantidade do produto: ");
+                    int quantidadeProduto = teclado.nextInt();
+                    Produto produto = new Produto(nomeProduto, valorProduto, quantidadeProduto);
+                    estoque.adicionarProduto(produto);
+                    System.out.println("Produto adicionado ao estoque.");
+                    break;
+                case 3:
+                	//cria um pedido mais detalhado com o produto
+                    System.out.print("Número do pedido: ");
+                    int numeroPedido = teclado.nextInt();
+                    Pedido pedido = new Pedido(numeroPedido);
+                    ArrayList<Produto> produtosPedido = new ArrayList<>();
+                    char adicionarMais;
+                    do {
+                        System.out.print("Nome do produto: ");
+                        teclado.nextLine(); 
+                        nomeProduto = teclado.nextLine();
+                        System.out.print("Quantidade do produto: ");
+                        quantidadeProduto = teclado.nextInt();
+                        produtosPedido.add(new Produto(nomeProduto, 0, quantidadeProduto));
+                        System.out.print("Adicionar mais produtos ao pedido? (s/n): ");
+                        adicionarMais = teclado.next().charAt(0);
+                    } while (adicionarMais == 's');
+                    funcionario.realizarPedido(pedido, produtosPedido, estoque);
+                    System.out.println("Pedido realizado. Valor total: " + pedido.getvalorTotal());
+                    break;
+                case 4:
+                	// essa função mostra os produtos que o fornecedor tem
+                    funcionario.interagirFornecedor(fornecedor);
+                    break;
+                case 5:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 5);
+
+        teclado.close();
+    }
+}
